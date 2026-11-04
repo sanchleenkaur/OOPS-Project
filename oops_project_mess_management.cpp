@@ -31,7 +31,7 @@ class Student:public Person{
         cout<<"ID:"<<id<< "Name:"<<name<<" Meals:"<<meals<<" Balance:"<<balance<<endl;
     }
     //file handling 
-    void save(ofstream &outFile) const override {
+   void save(ofstream &outFile)  {
         outFile.write(reinterpret_cast<const char*>(&id), sizeof(id));
         size_t len = name.size();
         outFile.write(reinterpret_cast<const char*>(&len), sizeof(len));
@@ -40,7 +40,7 @@ class Student:public Person{
         outFile.write(reinterpret_cast<const char*>(&balance), sizeof(balance));
     }
 
-    void load(ifstream &inFile) override {
+    void load(ifstream &inFile) {
         inFile.read(reinterpret_cast<char*>(&id), sizeof(id));
         size_t len;
         inFile.read(reinterpret_cast<char*>(&len), sizeof(len));
@@ -113,32 +113,30 @@ class Mess{
             cout<<"Expense Updated.Total Expense:"<<expense.getexpense()<<endl;
         }
         
-        //file handlind code
-        void saveToFile() {
-        ofstream outFile("mess_oop_data.dat", ios::binary);
-        size_t count = students.size();
-        outFile.write(reinterpret_cast<const char*>(&count), sizeof(count));
-        for (const auto &s : students) {
-            s->save(outFile);
-        }
-        outFile.close();
-        cout << "Data saved securely via polymorphism!\n";
-    }
-
-    void loadFromFile() {
-        ifstream inFile("mess_oop_data.dat", ios::binary);
-        if (!inFile) return;
-
-        size_t count;
-        inFile.read(reinterpret_cast<char*>(&count), sizeof(count));
-        students.clear();
-        for (size_t i = 0; i < count; ++i) {
-            auto s = make_unique<Student>();
-            s->load(inFile);
-            students.push_back(move(s));
-        }
-        inFile.close();
-    }
+        //file handling code
+void saveToFile(){
+    ofstream outfile "mess_oop_data.dat",ios::binary);
+    size_t count=student.size();
+    outFile.write(reinterpret_cast<const *char*>(&count),sizeof(count));
+    for(const auto& s:student){
+        s->save(outFile);}
+    outFile.close();
+    cout<<"Data saved securely!\n";
+}
+void loadFromFile(){
+    ifstream inFile("mess_oop_data.dat",ios::binary);
+    if(inFile!)return;
+    size_t count;
+    inFile.read(reinterpret_cast<char*>(&count),sizeof(count));
+    student.clear();
+    for(int i=0;i<count;i++){
+        auto s=male<Student>();
+        s->load(inFile);
+        student.pushback(move(s));}
+    inFile.close();
+}
+       
+        
     };
     
 
@@ -165,7 +163,7 @@ class Mess{
             case 5: messSystem.saveToFile(); cout << "Exiting...\n"; break;
             default: cout << "Invalid choice! Try again.\n";
         }
-    } while (choice != 4 && choice != 5);
+    } while (choice != 4);
 
     return 0;
 }
